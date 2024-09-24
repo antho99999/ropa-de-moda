@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Ropa "JUAREZ"</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav {
+            margin: 20px 0;
+        }
+        nav a {
+            color: black; /* Cambiado a color negro */
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Oculta por defecto */
+        }
+        h2 {
+            text-align: center;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            text-align: center;
+            margin: 10px 0;
+            color: red;
+        }
+        .products {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        .product {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            background-color: white;
+            text-align: center;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Tienda de Ropa</h1>
+    </header>
+
+    <nav>
+        <a href="#" onclick="showLogin()">Iniciar sesión</a>
+        <a href="#" onclick="showRegistration()">Registrarse</a>
+    </nav>
+
+    <div class="container" id="registration">
+        <h2>Registro</h2>
+        <input type="text" id="reg-username" placeholder="Nombre de usuario" required>
+        <input type="password" id="reg-password" placeholder="Contraseña" required>
+        <button onclick="register()">Registrarse</button>
+        <div class="message" id="reg-message"></div>
+    </div>
+
+    <div class="container" id="login">
+        <h2>Iniciar Sesión</h2>
+        <input type="text" id="login-username" placeholder="Nombre de usuario" required>
+        <input type="password" id="login-password" placeholder="Contraseña" required>
+        <button onclick="login()">Iniciar Sesión</button>
+        <div class="message" id="login-message"></div>
+    </div>
+
+    <div class="products" id="product-container" style="display:none;">
+        <h2>Productos Destacados</h2>
+        <div class="product">
+            <img src="http://nombresanimados.net/gifs-nombres-animados/gifs-animados-nombre-marcos-firma-animada-0556.gif" alt="Camisa Elegante">
+            <h3>Camisa Elegante</h3>
+            <p>Precio: $25.00</p>
+            <button>Añadir al Carrito</button>
+        </div>
+        <div class="product">
+            <img src="https://www.fichajes.net/sites/default/files/styles/epsa_detail_thumbail/public/2024-03/lamine-yamal-fichajes-rumores-psg-fc-barcelona.jpg.webp?h=7eaee140&itok=f_R5GMay" alt="Pantalones de Jeans">
+            <h3>Pantalones de Jeans</h3>
+            <p>Precio: $40.00</p>
+            <button>Añadir al Carrito</button>
+        </div>
+        <div class="product">
+            <img src="https://apostagolos.com/wp-content/uploads/2022/05/vinicius-junior-2-scaled.jpg" alt="Chaqueta de Cuero">
+            <h3>Chaqueta de Cuero</h3>
+            <p>Precio: $60.00</p>
+            <button>Añadir al Carrito</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Tienda de Ropa. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function showRegistration() {
+            document.getElementById('registration').style.display = 'block';
+            document.getElementById('login').style.display = 'none';
+        }
+
+        function showLogin() {
+            document.getElementById('registration').style.display = 'none';
+            document.getElementById('login').style.display = 'block';
+        }
+
+        function register() {
+            const username = document.getElementById('reg-username').value;
+            const password = document.getElementById('reg-password').value;
+            const messageElement = document.getElementById('reg-message');
+
+            if (localStorage.getItem(username)) {
+                messageElement.textContent = 'El usuario ya existe.';
+            } else {
+                localStorage.setItem(username, password);
+                messageElement.textContent = 'Registro exitoso. Ahora puedes iniciar sesión.';
+                document.getElementById('reg-username').value = '';
+                document.getElementById('reg-password').value = '';
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const messageElement = document.getElementById('login-message');
+
+            if (localStorage.getItem(username) === password) {
+                messageElement.textContent = 'Inicio de sesión exitoso. Bienvenido ' + username + '!';
+                alert('¡Bienvenido ' + username + '!');
+                document.getElementById('product-container').style.display = 'block';
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('registration').style.display = 'none';
+            } else {
+                messageElement.textContent = 'Nombre de usuario o contraseña incorrectos.';
+            }
+        }
+    </script>
+
+</body>
+</html>
+
